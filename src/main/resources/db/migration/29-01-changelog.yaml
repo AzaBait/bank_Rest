@@ -1,0 +1,112 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1753780168328-1
+      author: aza
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_cards
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: number
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: owner_id
+                  type: BIGINT
+              - column:
+                  name: expiration_date
+                  type: DATE
+              - column:
+                  name: balance
+                  type: DECIMAL
+              - column:
+                  name: status
+                  type: VARCHAR(255)
+            tableName: cards
+  - changeSet:
+      id: 1753780168328-2
+      author: aza
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_roles
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: role
+                  type: VARCHAR(255)
+            tableName: roles
+  - changeSet:
+      id: 1753780168328-3
+      author: aza
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_users
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  name: role_id
+                  type: BIGINT
+            tableName: users
+  - changeSet:
+      id: 1753780168328-4
+      author: aza
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: number
+            constraintName: uc_cards_number
+            tableName: cards
+  - changeSet:
+      id: 1753780168328-5
+      author: aza
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: owner_id
+            baseTableName: cards
+            constraintName: FK_CARDS_ON_OWNER
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1753780168328-6
+      author: aza
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: role_id
+            baseTableName: users
+            constraintName: FK_USERS_ON_ROLE
+            referencedColumnNames: id
+            referencedTableName: roles
+
